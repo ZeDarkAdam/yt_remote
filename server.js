@@ -73,10 +73,13 @@ io.on("connection", (socket) => {
 app.get("/", (req, res) => {
   res.render("index", { ipAddress: LOCAL_IP, port: 3000 });
 });
+
 // Get local IP dynamically
 function getLocalIP() {
   const interfaces = os.networkInterfaces();
-  for (const name of Object.keys(interfaces)) {
+  const sortedInterfaces = Object.keys(interfaces).sort();
+
+  for (const name of sortedInterfaces) {
     for (const net of interfaces[name]) {
       // Check if it's IPv4 and not an internal (127.0.0.1) address
       if (net.family === "IPv4" && !net.internal) {
